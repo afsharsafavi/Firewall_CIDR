@@ -1,0 +1,22 @@
+{
+  "name": "afsharsafavi/firewall_cidr",
+  "autoload": {
+    "psr-4": {
+      "FireWallCIDR\\": "src/"
+    }
+  },
+  "homepage": "https://github.com/afsharsafavi/Firewall_CIDR",
+  "license": "GPL-3.0-or-later",
+  "require": {
+    "ext-curl": "*"
+  },
+  "authors": [
+    {
+      "name": "Roohollah Afshar Safavi",
+      "email": "rafsharsafavi@gmail.com",
+      "role": "Developer"
+    }
+  ],
+  "type": "project",
+  "keywords": ["mikrotik", "tcp" ,"udp", "firewall", "iptables", "cidr", "cidr-ranges" ]
+}

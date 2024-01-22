@@ -1,0 +1,84 @@
+{
+  "country_code": "IR",
+  "ISP_Label": {
+    "Rightel": [
+      "Rightel Communication Service Company PJS"
+    ],
+    "Irancell": [
+      "Iran Cell Service and Communication Company"
+    ],
+    "ITC": [
+      "Iran Telecommunication Company PJS",
+      "Mobile Communication Company of Iran PLC"
+    ],
+    "Mobinnet": [
+      "Mobin Net Communication Company (Private Joint Stock)"
+    ],
+    "sabanet": [
+      "Parvaresh Dadeha Co. Private Joint Stock"
+    ]
+  },
+  "data_valid_days": 14,
+  "CIDR_Lookup_Drivers": [
+    "ipapi_co",
+    "hexillion",
+    "ipwhois",
+    "ipinfo",
+    "ipip_is"
+  ],
+  "proxy": [
+    "127.0.0.1:1080",
+    "127.0.0.1:1081",
+    "127.0.0.1:1082",
+    "127.0.0.1:1084"
+  ],
+  "custom_CIDR_data": {
+    "185.223.44.0\/22": {
+      "c": "IR",
+      "o": "Pasargad Bank"
+    }
+  },
+  "firewalls": [
+    {
+      "type": "iptables",
+      "ISP": [
+        "Rightel",
+        "Irancell",
+        "Mobinnet",
+        "Sabanet"
+      ],
+      "tcp": [
+        "22"
+      ],
+      "udp": [
+        "10000:20000",
+        "5060"
+      ]
+    },
+    {
+      "type": "mikrotik",
+      "ISP": [
+        "Rightel",
+        "Irancell",
+        "Mobinnet"
+      ],
+      "comment": "My ISPs: Rightel, Irancell, Mobinnet",
+      "label": "MY_list_1"
+    },
+    {
+      "type": "mikrotik",
+      "ISP": [],
+      "comment": "IR"
+    },
+    {
+      "type": "raw",
+      "ISP": [
+        "Irancell",
+        "Rightel"
+      ]
+    },
+    {
+      "type": "raw"
+    }
+  ]
+}
