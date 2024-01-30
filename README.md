@@ -14,6 +14,28 @@ Another example is IP PBX like Asterisk or Issabel. Sometimes you need to allow 
 cell phone sim cards in a specific country.
 You can find out your country operators IP ranges and add them to your whitelist, and block elsewhere.
 
+## Run by Docker
+
+```bash
+docker pull afsharsafavi/cidr
+
+docker run -v ./Output:/myapp/Output -v ./Data/:/myapp/Data --network host -it --rm afsharsafavi/cidr
+
+```
+
+or
+
+```bash
+git clone git@github.com:afsharsafavi/Firewall_CIDR.git
+
+cd Firewall_CIDR
+
+docker build -t myapp .
+
+docker run -v ./Output:/myapp/Output -v ./Data/:/myapp/Data --network host -it --rm myapp
+
+```
+
 ## Installation
 
 Dependency:
@@ -207,8 +229,8 @@ In Raw type, I will write only CIDR address for you to use them in unsupported f
 If it's needed you can add some codes,prefix and/or postfix to CIDR list to use them depend on your needs.
 
 ## DISCLAIMER
-This project collect countries CIDR and whois data from third-party services that there is no 100% guarantee on data accuracy. Before applying generated rules 
-from this project, you should double check data and rules and also know care about your firewall strategy and concerns. 
+This project collect countries CIDR and whois data from third-party services that there is no 100% guarantee on data accuracy. Before applying generated rules
+from this project, you should double check data and rules and also know care about your firewall strategy and concerns.
 
 ## License
 
