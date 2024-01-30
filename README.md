@@ -70,7 +70,7 @@ git clone git@github.com:afsharsafavi/Firewall_CIDR.git
 or by composer
 
 ```bash
-composer require afsharsafavi/firewall_cidr
+composer create-project afsharsafavi/firewall_cidr
 ```
 
 To run
