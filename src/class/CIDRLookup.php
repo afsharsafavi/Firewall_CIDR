@@ -84,6 +84,7 @@ class CIDRLookup
             file_put_contents(self::$IP_data_File, json_encode(self::$CIDR_data));
         }
         CIDR_Lookup::setCIDRData(self::$CIDR_data);
+        Merge_CIDR::merge();
     }
 
     public static function filter_CIDR(array &$CIDR_data, array $needed_ISPs): array

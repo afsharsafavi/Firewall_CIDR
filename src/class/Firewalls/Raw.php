@@ -4,6 +4,7 @@ namespace FireWallCIDR\class\Firewalls;
 
 use FireWallCIDR\CIDR_Lookup;
 use FireWallCIDR\class\CIDRLookup;
+use FireWallCIDR\class\Merge_CIDR;
 
 class Raw
 {
@@ -19,8 +20,7 @@ class Raw
 
     public function run(): void
     {
-        $CIDR_data = CIDR_Lookup::getCIDRData();
-        $this->witheList_ISP = CIDRLookup::filter_CIDR($CIDR_data, $this->config['isp']);
+        $this->witheList_ISP = Merge_CIDR::filter_CIDR($this->config['isp']);
         $this->make_address_list();
     }
 

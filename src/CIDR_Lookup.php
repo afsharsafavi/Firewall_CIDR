@@ -20,6 +20,7 @@ class CIDR_Lookup
     private static string $base_DIR = __DIR__;
     private static string $data_path = '/Data/';
     private static string $CIDR_data_file;
+    public static string $IP__merged_data_File;
     private static string $CIDR_file;
     private static int $data_valid_days = 14;
     private static array $proxy = [];
@@ -75,7 +76,15 @@ class CIDR_Lookup
     {
         self::$CIDR_file = $CIDR_file;
     }
+    public static function getIPMergedDataFile(): string
+    {
+        return self::$IP__merged_data_File;
+    }
 
+    public static function setIPMergedDataFile(string $IP__merged_data_File): void
+    {
+        self::$IP__merged_data_File = $IP__merged_data_File;
+    }
     public static function getCIDRDataFile(): string
     {
         return self::$CIDR_data_file;
@@ -134,6 +143,7 @@ class CIDR_Lookup
         }
         self::setCIDRFile(self::$data_path . strtoupper(self::$config['country_code']) . '_CIDR');
         self::setCIDRDataFile(self::$data_path . strtoupper(self::$config['country_code']) . '_CIDR_Data');
+        self::setIPMergedDataFile(self::$data_path . strtoupper(self::$config['country_code']) . '_CIDR_Merged_Data');
         self::setCountryCode(self::$config['country_code']);
         if (!empty(self::$config['data_valid_days'])) {
             if (is_integer(self::$config['data_valid_days']) && self::$config['data_valid_days'] > 0) {
@@ -314,7 +324,6 @@ class CIDR_Lookup
     {
         self::$CIDR_data = $CIDR_data;
     }
-
     public static function delTree($dir): bool
     {
 
@@ -338,5 +347,7 @@ class CIDR_Lookup
     {
         self::$custom_CIDR_data[$CIDR] = array_merge($data, ['t' => time()]);
     }
+
+
 
 }
