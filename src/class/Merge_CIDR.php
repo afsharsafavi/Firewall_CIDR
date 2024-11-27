@@ -18,9 +18,19 @@ class Merge_CIDR
         }
         $whiteList = [];
         foreach (self::$Organizations as $organization => $value) {
-            if (in_array($organization, $ISP) || empty($ISP)) {
+            if (empty($ISP)) {
                 foreach ($value['s'] as $CIDR) {
                     $whiteList[] = ['i' => $CIDR, 'o' => $organization];
+                }
+            } else {
+                foreach ($ISP as $isp) {
+                    $isp = strtolower($isp);
+                    $organization = strtolower($organization);
+                    if ($isp === $organization || strpos($organization, $isp) !== false) {
+                        foreach ($value['s'] as $CIDR) {
+                            $whiteList[] = ['i' => $CIDR, 'o' => $organization];
+                        }
+                    }
                 }
             }
         }

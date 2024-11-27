@@ -25,6 +25,7 @@ class CIDR_Lookup
     private static int $data_valid_days = 14;
     private static array $proxy = [];
     private static array $CIDR_Lookup_Driver = [];
+    public static array $CIDR_Lookup_Driver_Key = [];
     private static array $ISPs = [];
     private static array $config;
     private static string $country_code = 'ir';
@@ -52,9 +53,15 @@ class CIDR_Lookup
         return self::$CIDR_Lookup_Driver;
     }
 
-    public static function setCIDRLookupDriver(string $driver): void
+    public static function setCIDRLookupDriver(string|array $driver): void
     {
+        if (is_array($driver)) {
+            foreach ($driver as $driver => $key) {
+            }
+            self::$CIDR_Lookup_Driver_Key[$driver] = $key;
+        }
         self::$CIDR_Lookup_Driver[] = $driver;
+
     }
 
     public static function getDataValidDays(): int
@@ -76,6 +83,7 @@ class CIDR_Lookup
     {
         self::$CIDR_file = $CIDR_file;
     }
+
     public static function getIPMergedDataFile(): string
     {
         return self::$IP__merged_data_File;
@@ -85,6 +93,7 @@ class CIDR_Lookup
     {
         self::$IP__merged_data_File = $IP__merged_data_File;
     }
+
     public static function getCIDRDataFile(): string
     {
         return self::$CIDR_data_file;
@@ -324,6 +333,7 @@ class CIDR_Lookup
     {
         self::$CIDR_data = $CIDR_data;
     }
+
     public static function delTree($dir): bool
     {
 
@@ -347,7 +357,6 @@ class CIDR_Lookup
     {
         self::$custom_CIDR_data[$CIDR] = array_merge($data, ['t' => time()]);
     }
-
 
 
 }

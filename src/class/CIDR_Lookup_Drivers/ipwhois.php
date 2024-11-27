@@ -7,7 +7,7 @@ use FireWallCIDR\class\Base_CIDR_Lookup;
 class ipwhois extends Base_CIDR_Lookup implements CIDR_Lookup_Driver
 {
     public static string $class_name;
-    public static string $url = 'https://ipwhois.app/widget.php?lang=en&ip=%s';
+    public static string $url = 'https://ipwho.is/%s';
     public static string $referer = 'https://ipwhois.io/';
 
     public static function fetch(&$ip_data): array

@@ -20,11 +20,13 @@
   },
   "data_valid_days": 14,
   "CIDR_Lookup_Drivers": [
+    {
+      "ipinfo": "api_key"
+    },
     "ipapi_co",
-    "hexillion",
     "ipwhois",
-    "ipinfo",
-    "ipip_is"
+    "ipip_is",
+    "hexillion"
   ],
   "proxy": [
     "127.0.0.1:1080",
@@ -36,6 +38,14 @@
     "185.223.44.0\/22": {
       "c": "IR",
       "o": "Pasargad Bank"
+    },
+    "193.201.66.0/24": {
+      "c": "IR",
+      "o": "Pishgaman Ofogh Barkhat LLC"
+    },
+    "91.216.71.0/24": {
+      "c": "IR",
+      "o": "Ertebat Gostaran Rangin Kaman Co. Ltd"
     }
   },
   "firewalls": [

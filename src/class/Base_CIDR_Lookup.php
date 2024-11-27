@@ -9,7 +9,7 @@ class Base_CIDR_Lookup
     public static array $CURL_handlers = [];
     public static array $proxy = [''];
     public static int $connection_counter = 0;
-
+    public static bool $shouldInit = false;
 
     public static function className(): void
     {
@@ -43,6 +43,10 @@ class Base_CIDR_Lookup
 
     public static function lookup($u_ip): array
     {
+        if (static::$shouldInit) {
+            static::init();
+            static::$shouldInit = false;
+        }
         $data = static::$CURL_handlers[static::$class_name][static::$connection_counter++ % count(static::$proxy)]->run(sprintf(static::$url,
             $u_ip), static::$referer);
         $json = json_decode($data, 1);
