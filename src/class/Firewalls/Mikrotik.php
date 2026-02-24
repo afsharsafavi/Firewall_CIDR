@@ -31,7 +31,7 @@ class Mikrotik
             $comment = " comment=\"" . $this->config['comment'] . "\"";
         }
         if (empty($this->config['label'])) {
-            $label = 'CIDR_' . CIDR_Lookup::getCountryCode();
+            $label = 'CIDR_' . strtoupper(CIDR_Lookup::getCountryCode());
             if (!empty(CIDRLookup::$ISP)) {
                 $label .= '_custom';
             }
