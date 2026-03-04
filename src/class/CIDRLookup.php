@@ -54,7 +54,6 @@ class CIDRLookup
         $CIDRLookupDriver = CIDR_Lookup::getCIDRLookupDriver();
         $CIDR_Lookup_valid_days = CIDR_Lookup::getDataValidDays() * 86400;
         $time = time();
-        $i = 0;
         foreach (self::$CIDR as $key => $value) {
             preg_match('/(.*)\/\d/', $value, $p);
             $ip = $p[1];
@@ -68,13 +67,13 @@ class CIDRLookup
                 }
                 $result = ("FireWallCIDR\class\CIDR_Lookup_Drivers\\" . $CIDRLookupDriver[$i])::run($ip);
                 if (!empty($result)) {
+                    if ($result['c'] != Fetch_CIDR::$country) {
+                        continue;
+                    }
                     $result['t'] = $time;
                     print_r($result);
                     break;
                 }
-            };
-            if ($i == count($CIDRLookupDriver)) {
-                $i = 0;
             }
             if (empty($result)) {
                 echo "Lookup of IP:$ip has problem" . PHP_EOL;

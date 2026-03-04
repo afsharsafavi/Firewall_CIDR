@@ -6,15 +6,17 @@ use FireWallCIDR\CIDR_Lookup;
 
 class Fetch_CIDR
 {
-    private static string $url = 'https://www.ipdeny.com/ipblocks/data/countries/';
+    private static string $server1 = 'https://www.ipdeny.com/ipblocks/data/countries/';
+    private static string $server2 = 'https://raw.githubusercontent.com/ipverse/country-ip-blocks/refs/heads/master/country/';
     private static mixed $file;
     private static array $CIDR;
-    private static string $country;
+    public static string $country;
 
     public static function run($country_code): void
     {
         self::$country = $country_code;
-        self::$url .= self::$country . ".zone";
+        self::$server1 .= self::$country . ".zone";
+        self::$server2 .= self::$country . "/ipv4-aggregated.txt";
         self::fetch();
     }
 
@@ -29,7 +31,10 @@ class Fetch_CIDR
                 return;
             }
         }
-        self::$file = file_get_contents(self::$url);
+        $file1 = file_get_contents(self::$server1);
+        $file2 = file_get_contents(self::$server2);
+        $file2 = preg_replace('/^\s*#.*\R/m', '', $file2);
+        self::$file = $file1 . "\n" . $file2;
         self::extract_CIDR();
         self::save();
     }
@@ -37,8 +42,11 @@ class Fetch_CIDR
     public static function extract_CIDR(): void
     {
         preg_match_all('`\n(?<cidr>\d+\.\d+\.\d+\.\d+/\d+)`', self::$file, $m);
+        self::$CIDR = [];
         foreach ($m['cidr'] as $CIDR) {
-            self::$CIDR[] = $CIDR;
+            if (!in_array($CIDR, self::$CIDR)) {
+                self::$CIDR[] = $CIDR;
+            }
         }
     }
 

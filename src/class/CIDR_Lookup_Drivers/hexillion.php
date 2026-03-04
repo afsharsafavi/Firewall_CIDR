@@ -12,10 +12,17 @@ class hexillion extends Base_CIDR_Lookup implements CIDR_Lookup_Driver
 
     public static function fetch(&$ip_data): array
     {
-        if (!(empty($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Country'][0]) || empty($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Name'][0]))) {
+        if (!(empty($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['CountryCode'][0]))) {
+            if (!empty($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Name'][0])) {
+                $org = $ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Name'][0];
+            } elseif (!empty($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Network']['Handle'][0])) {
+                $org = $ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Network']['Handle'][0];
+            } else {
+                $org = '';
+            }
             return [
-                'c' => $ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Country'][0],
-                'o' => $ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['Name'][0],
+                'c' => strtolower($ip_data['ServiceResult']['QueryResult']['WhoisRecord']['Registrant']['CountryCode'][0]),
+                'o' => $org,
             ];
         }
         return [];
