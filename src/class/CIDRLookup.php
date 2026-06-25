@@ -55,8 +55,7 @@ class CIDRLookup
         $CIDR_Lookup_valid_days = CIDR_Lookup::getDataValidDays() * 86400;
         $time = time();
         foreach (self::$CIDR as $key => $value) {
-            preg_match('/(.*)\/\d/', $value, $p);
-            $ip = $p[1];
+            $ip = self::get_representative_ip($value);
             if (isset(self::$CIDR_data[$value]) && self::$CIDR_data[$value]['t'] > $time - $CIDR_Lookup_valid_days) {
                 continue;
             }
@@ -107,6 +106,36 @@ class CIDRLookup
             }
         }
         return $whiteList;
+    }
+
+    private static function get_representative_ip(string $cidr): string
+    {
+        if (strpos($cidr, '/') === false) {
+            return $cidr;
+        }
+        [$ip_part, $mask_part] = explode('/', $cidr, 2);
+        $mask = (int)$mask_part;
+        if ($mask < 0 || $mask > 32) {
+            return $ip_part;
+        }
+
+        $ip_long = ip2long($ip_part);
+        if ($ip_long === false) {
+            return $ip_part;
+        }
+
+        $ip_unsigned = (float)sprintf('%u', $ip_long);
+        $num_ips = pow(2, 32 - $mask);
+        $network_unsigned = floor($ip_unsigned / $num_ips) * $num_ips;
+
+        if ($mask >= 30) {
+            $offset = ($mask == 32) ? 0 : 1;
+        } else {
+            $offset = (int)($num_ips / 2) + 1;
+        }
+
+        $representative_unsigned = $network_unsigned + $offset;
+        return long2ip((int)$representative_unsigned);
     }
 
 }
